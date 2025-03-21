@@ -1,0 +1,10 @@
+html .daterangepicker .calendar-table th,
+html .daterangepicker .calendar-table td {
+  padding: 0;
+  min-width: 0;
+  width: 24px;
+}
+
+html .daterangepicker .drp-calendar {
+  max-width: fit-content;
+}
