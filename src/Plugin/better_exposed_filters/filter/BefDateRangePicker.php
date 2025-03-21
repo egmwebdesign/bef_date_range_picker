@@ -20,8 +20,9 @@ class BefDateRangePicker extends FilterWidgetBase {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     $config = parent::defaultConfiguration();
+    $config['date_format'] = "YYYY-MM-DD";
     return $config;
   }
 
@@ -34,11 +35,15 @@ class BefDateRangePicker extends FilterWidgetBase {
     if (!empty($form[$wrapperKey])) {
       $form[$wrapperKey]['#type'] = 'bef_date_range_picker';
       $form[$wrapperKey]['#fieldId'] = $field_id;
-      $form[$wrapperKey]['#date-format'] = "YYYY.MM.DD.";
+      $form[$wrapperKey]['#date-format'] = $this->configuration['date_format'] ?? "YYYY-MM-DD";
+
+      // drupal 9 deprecation warning fix
+      $form[$wrapperKey][$field_id]['min']['#attributes']['type'] = "date";
+      $form[$wrapperKey][$field_id]['max']['#attributes']['type'] = "date";
     }
   }
 
-  public static function isApplicable($filter = NULL, array $filter_options = []) {
+  public static function isApplicable($filter = NULL, array $filter_options = []): bool {
     // Sanity check to ensure we have a filter to work with.
     if (!isset($filter)) {
       return FALSE;
@@ -57,8 +62,14 @@ class BefDateRangePicker extends FilterWidgetBase {
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildConfigurationForm($form, $form_state);
+    $form['date_format'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Date format'),
+      '#description' => $this->t('The date format to use for the date picker. See the <a href="http://momentjs.com/docs/#/displaying/format/">Moment.js documentation</a> for more information.'),
+      '#default_value' => $this->configuration['date_format'] ?? "",
+    ];
     return $form;
   }
 }
