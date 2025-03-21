@@ -6,5 +6,6 @@ core_version_requirement: ^9 || ^10
 dependencies:
   - better_exposed_filters
 
+version: 1.0.0
 'interface translation project': bef_date_range_picker
-'interface translation server pattern': modules/custom/bef_date_range_picker/translations/%project.%language.po
+'interface translation server pattern': modules/contrib/bef_date_range_picker/translations/%project.%language.po
