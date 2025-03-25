@@ -67,3 +67,10 @@ msgstr "Minulý mesiac"
 
 msgid "Custom Range"
 msgstr "Vlastný rozsah"
+
+msgid "Next 7 days"
+msgstr "Nasledujúcich 7 dní"
+
+msgid "Next 14 days"
+msgstr "Nasledujúcich 14 dní"
+
