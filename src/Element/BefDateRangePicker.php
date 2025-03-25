@@ -51,6 +51,8 @@ class BefDateRangePicker extends Fieldset {
     $info['#type'] = "bef_date_range_picker";
     $info['#attached']['library'][] = 'bef_date_range_picker/bef_date_range_picker';
     $info['#fieldId'] = NULL;
+    $info['#future_ranges'] = FALSE;
+
     $info['#date-format'] = "YYYY-MM-DD";
     $info['#attributes']['class'][] = 'bef-date-range-picker-container';
     $info['#process'][] = [$class, 'processSelect'];
@@ -59,7 +61,10 @@ class BefDateRangePicker extends Fieldset {
 
   public static function processSelect(&$element, FormStateInterface $form_state, &$complete_form): array {
     $fieldId = $element['#fieldId'];
-    $element['#attributes']['date-picker-date-format'] = $element['#date-format'];
+
+    $element['#attributes']['date-picker-date-format'] = $element['#date-format'] ?? "YYYY-MM-DD";
+    $element['#attributes']['date-picker-future-ranges'] = $element['#future_ranges'] ?? FALSE;
+
     $min = &$element[$fieldId]['min'];
     $max = &$element[$fieldId]['max'];
 

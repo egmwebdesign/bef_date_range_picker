@@ -27,18 +27,30 @@
         max = moment(max.val()).subtract(1, 'days');
 
         let dateFormat = $(element).attr('date-picker-date-format');
+        let localRanges = Object.assign({}, ranges);
+
         if (!dateFormat) {
           dateFormat = 'YYYY-MM-DD';
         }
 
+        let futureRanges = $(element).attr('date-picker-future-ranges');
+        console.log(futureRanges);
+        if (futureRanges == "1") {
+          console.log('Adding future ranges');
+          localRanges[Drupal.t('Next 7 days')] = [moment(), moment().add(1, 'week')];
+          localRanges[Drupal.t('Next 14 days')] = [moment(), moment().add(2, 'week')];
+        }
+
         let config = {};
         let isPreLoaded = min.isValid() && max.isValid();
+
         if (isPreLoaded) {
           config.startDate = min;
           config.endDate = max;
         }
+
         config.autoUpdateInput = isPreLoaded;
-        config.ranges = ranges;
+        config.ranges = localRanges;
         config.locale = {
           format: dateFormat,
           applyLabel: Drupal.t('Apply'),
