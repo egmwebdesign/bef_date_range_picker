@@ -34,9 +34,7 @@
         }
 
         let futureRanges = $(element).attr('date-picker-future-ranges');
-        console.log(futureRanges);
         if (futureRanges == "1") {
-          console.log('Adding future ranges');
           localRanges[Drupal.t('Next 7 days')] = [moment(), moment().add(1, 'week')];
           localRanges[Drupal.t('Next 14 days')] = [moment(), moment().add(2, 'week')];
         }
