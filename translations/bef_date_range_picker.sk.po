@@ -74,3 +74,8 @@ msgstr "Nasledujúcich 7 dní"
 msgid "Next 14 days"
 msgstr "Nasledujúcich 14 dní"
 
+msgid "Tomorrow"
+msgstr "Zajtra"
+
+msgid "Day after tomorrow"
+msgstr "Pozajtra"

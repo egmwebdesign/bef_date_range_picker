@@ -73,3 +73,8 @@ msgstr "Következő 7 nap"
 msgid "Next 14 days"
 msgstr "Következő 14 nap"
 
+msgid "Tomorrow"
+msgstr "Holnap"
+
+msgid "Day after tomorrow"
+msgstr "Holnapután"

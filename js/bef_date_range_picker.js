@@ -17,6 +17,8 @@
       const elements = once('bef-date-range-picker-container', '.bef-date-range-picker-container', context);
       elements.forEach(function(element) {
 
+        let form = $(element).closest('form');
+        let shouldAutoSubmit = typeof $(form).attr('data-bef-auto-submit') === 'string';
         const output = $(element).find(OUTPUT_ELEMENT_SELECTOR);
         let min = $(element).find(MIN_ELEMENT_SELECTOR);
         let max = $(element).find(MAX_ELEMENT_SELECTOR);
@@ -35,8 +37,10 @@
 
         let futureRanges = $(element).attr('date-picker-future-ranges');
         if (futureRanges == "1") {
-          localRanges[Drupal.t('Next 7 days')] = [moment(), moment().add(1, 'week')];
-          localRanges[Drupal.t('Next 14 days')] = [moment(), moment().add(2, 'week')];
+          ranges[Drupal.t('Tomorrow')] = [moment().add(1, 'days'), moment().add(1, 'days')];
+          ranges[Drupal.t('Day after tomorrow')] = [moment().add(2, "days"), moment().add(2, 'days')];
+          ranges[Drupal.t('Next 7 days')] = [moment(), moment().add(6, 'days')];
+          ranges[Drupal.t('Next 14 days')] = [moment(), moment().add(13, 'days')];
         }
 
         let config = {};
@@ -88,6 +92,9 @@
           $(element).find(MIN_ELEMENT_SELECTOR).val(start.format("YYYY-MM-DD"));
           // We add 1 day to the max date, because drupal is not inclusive by default.
           $(element).find(MAX_ELEMENT_SELECTOR).val(end.add(1, 'days').format("YYYY-MM-DD"));
+          if (shouldAutoSubmit) {
+            $(form).submit();
+          }
         });;
       });
     }
