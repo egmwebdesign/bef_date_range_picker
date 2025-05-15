@@ -37,10 +37,10 @@
 
         let futureRanges = $(element).attr('date-picker-future-ranges');
         if (futureRanges == "1") {
-          ranges[Drupal.t('Tomorrow')] = [moment().add(1, 'days'), moment().add(1, 'days')];
-          ranges[Drupal.t('Day after tomorrow')] = [moment().add(2, "days"), moment().add(2, 'days')];
-          ranges[Drupal.t('Next 7 days')] = [moment(), moment().add(6, 'days')];
-          ranges[Drupal.t('Next 14 days')] = [moment(), moment().add(13, 'days')];
+          localRanges[Drupal.t('Tomorrow')] = [moment().add(1, 'days'), moment().add(1, 'days')];
+          localRanges[Drupal.t('Day after tomorrow')] = [moment().add(2, "days"), moment().add(2, 'days')];
+          localRanges[Drupal.t('Next 7 days')] = [moment(), moment().add(6, 'days')];
+          localRanges[Drupal.t('Next 14 days')] = [moment(), moment().add(13, 'days')];
         }
 
         let config = {};
