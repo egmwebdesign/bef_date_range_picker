@@ -24,6 +24,7 @@ class BefDateRangePicker extends FilterWidgetBase {
     $config = parent::defaultConfiguration();
     $config['date_format'] = "YYYY-MM-DD";
     $config['future_ranges'] = FALSE;
+    $config['custom_ranges'] = "";
     return $config;
   }
 
@@ -38,6 +39,7 @@ class BefDateRangePicker extends FilterWidgetBase {
       $form[$wrapperKey]['#fieldId'] = $field_id;
       $form[$wrapperKey]['#date-format'] = $this->configuration['date_format'] ?? "YYYY-MM-DD";
       $form[$wrapperKey]['#future_ranges'] = $this->configuration['future_ranges'] ?? FALSE;
+      $form[$wrapperKey]['#custom_ranges'] = $this->configuration['custom_ranges'] ?? "";
 
       // drupal 9 deprecation warning fix
       $form[$wrapperKey][$field_id]['min']['#attributes']['type'] = "date";
@@ -92,6 +94,13 @@ class BefDateRangePicker extends FilterWidgetBase {
       '#title' => $this->t('Future ranges'),
       '#description' => $this->t('Allow future date ranges.'),
       '#default_value' => $this->configuration['future_ranges'] ?? FALSE,
+    ];
+
+    $form['custom_ranges'] = [
+      '#type' => 'textarea',
+      '#title' => t('Custom ranges'),
+      '#description' => t('Label,+-interval_start_day,+-interval_end_day. One range per line. Example: "Last 7 days,-7,0"'),
+      '#default_value' => $this->configuration['custom_ranges'] ?? "",
     ];
     return $form;
   }

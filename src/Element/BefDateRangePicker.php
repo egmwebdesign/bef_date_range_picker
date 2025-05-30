@@ -20,7 +20,8 @@ use Drupal\Core\Url;
     $form['date_interval'] = [
       '#type' => 'bef_date_range_picker',
       '#fieldId' => 'date_interval', // same as the key of the render array
-      '#date-format' => "YYYY.MM.DD", // NOT php format, but http://www.daterangepicker.com/ format
+      '#date-format' => "YYYY.MM.DD", // NOT php date format, but http://www.daterangepicker.com/ format
+      '#custom_ranges' => '', // @see bef_date_range_picker/src/Element/BefDateRangePicker.php: custom_ranges description
       '#title' => 'Date',
       'date_interval' => [ // same as the value of "#fieldId"
         '#tree' => TRUE,
@@ -52,6 +53,7 @@ class BefDateRangePicker extends Fieldset {
     $info['#attached']['library'][] = 'bef_date_range_picker/bef_date_range_picker';
     $info['#fieldId'] = NULL;
     $info['#future_ranges'] = FALSE;
+    $info['#custom_ranges'] = "";
 
     $info['#date-format'] = "YYYY-MM-DD";
     $info['#attributes']['class'][] = 'bef-date-range-picker-container';
@@ -64,6 +66,7 @@ class BefDateRangePicker extends Fieldset {
 
     $element['#attributes']['date-picker-date-format'] = $element['#date-format'] ?? "YYYY-MM-DD";
     $element['#attributes']['date-picker-future-ranges'] = $element['#future_ranges'] ?? FALSE;
+    $element['#attributes']['date-picker-custom-ranges'] = $element['#custom_ranges'] ?? FALSE;
 
     $min = &$element[$fieldId]['min'];
     $max = &$element[$fieldId]['max'];

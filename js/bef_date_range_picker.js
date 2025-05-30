@@ -4,6 +4,27 @@
   const MAX_ELEMENT_SELECTOR = '.bef-date-range-picker-max';
   const OUTPUT_ELEMENT_SELECTOR = '.bef-date-range-picker-output';
 
+  /** @param {string} custom_ranges */
+  function parseCustomRanges(custom_ranges) {
+    let ranges = {};
+    console.log("parseCustomRanges", custom_ranges);
+    let customRangesArray = custom_ranges.split('\n');
+
+    if (customRangesArray.length == 0) {
+      return {};
+    }
+
+    for (let i = 0; i < customRangesArray.length; i++) {
+      let line = customRangesArray[i].trim();
+      let [label, firstInterval, secondInterval] = line.split(',');
+      firstInterval = parseInt(firstInterval.trim());
+      secondInterval = parseInt(secondInterval.trim());
+      ranges[Drupal.t(label.trim())] = [moment().add(firstInterval, 'days'), moment().add(secondInterval, 'days')];
+    }
+
+    return ranges;
+  }
+
   Drupal.behaviors.bef_date_range_picker = {
     attach: function(context, settings) {
       let ranges = {};
@@ -17,8 +38,16 @@
       const elements = once('bef-date-range-picker-container', '.bef-date-range-picker-container', context);
       elements.forEach(function(element) {
 
+        let localRanges = Object.assign({}, ranges);
+
         let form = $(element).closest('form');
         let shouldAutoSubmit = typeof $(form).attr('data-bef-auto-submit') === 'string';
+        let custom_ranges = $(element).attr('date-picker-custom-ranges');
+        let parsedCustomRanges = parseCustomRanges(custom_ranges);
+
+        if (parsedCustomRanges && Object.keys(parsedCustomRanges).length > 0) {
+          localRanges = Object.assign(localRanges, parsedCustomRanges);
+        }
         const output = $(element).find(OUTPUT_ELEMENT_SELECTOR);
         let min = $(element).find(MIN_ELEMENT_SELECTOR);
         let max = $(element).find(MAX_ELEMENT_SELECTOR);
@@ -29,7 +58,6 @@
         max = moment(max.val()).subtract(1, 'days');
 
         let dateFormat = $(element).attr('date-picker-date-format');
-        let localRanges = Object.assign({}, ranges);
 
         if (!dateFormat) {
           dateFormat = 'YYYY-MM-DD';
