@@ -7,9 +7,12 @@
   /** @param {string} custom_ranges */
   function parseCustomRanges(custom_ranges) {
     let ranges = {};
-    console.log("parseCustomRanges", custom_ranges);
     let customRangesArray = custom_ranges.split('\n');
-
+    customRangesArray = customRangesArray.filter(function(line) {
+      if (line.trim().length == 0) {
+        return false;
+      }
+    });
     if (customRangesArray.length == 0) {
       return {};
     }
