@@ -78,6 +78,7 @@ class BefDateRangePicker extends Fieldset {
       '#maxlength' => '100000',
       '#attributes' => [
         'class' => ['bef-date-range-picker-output'],
+        'autocomplete' => 'off',
       ],
     ];
 
